@@ -193,6 +193,30 @@ class MovieExploarer {
 
     }
 
+    yearFilter(filter) {
+
+        if (filter === "") {
+            this.trendingSection.style.display = "block";
+            return;
+        }
+
+        this.trendingSection.style.display = "none";
+
+        if (filter === "newest") {
+            this.movies.sort((a, b) => {
+                return Number(b.Year) - Number(a.Year);
+            });
+        }
+
+        if (filter === "oldest") {
+            this.movies.sort((a, b) => {
+                return Number(a.Year) - Number(b.Year);
+            });
+        }
+
+        this.renderDiscoverMovies(this.movies);
+    }
+
     updateTrend() {
         this.trendingGrid.style.transform =
             `translateX(-${this.trendIndex * this.cardWidth}px)`;
@@ -250,6 +274,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     app.inputText.addEventListener("input", () => {
         app.searchMovie(app.inputText.value);
+    })
+
+    app.yearSort.addEventListener("change", () => {
+        app.yearFilter(app.yearSort.value);
     })
 
 });
